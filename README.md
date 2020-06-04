@@ -1,8 +1,8 @@
-# Nature Remo API Clinet
+# Nature Remo API Client
 This is api client for Nature Remo.  
 You can retrieve sensor data such as Humidity, Illuminance, Motion and Temperature. And simply deploy this  client to Docker, k8s or so.
 
-## My Test Environments
+## Test Environment
 - Remo Firmware: 1.0.77-g808448c
 
 ## Environment Values
@@ -18,10 +18,58 @@ You can set prameters as envronment values.
 
 
 ## How to run
-If you are using docker, run it like below.  
+If you are using docker, run like below.  
 
 ```
 docker run --env REMO_TOKEN=<YOUR TOKEN> --env REMO_TARGET_DEVICE=<YOUR DEVICE NAME> --env REMO_INTERVAL=10 --env REMO_LOG_PATH=/tmp/sensor.log fideltak/remo-api-client
+```
+
+If you want to save log file on your docker host, attach volume.
+
+```
+docker run --env REMO_TOKEN=<YOUR TOKEN> --env REMO_TARGET_DEVICE=<YOUR DEVICE NAME> --env REMO_INTERVAL=10 --env REMO_LOG_PATH=/tmp/sensor.log -v /tmp/:/tmp fideltak/remo-api-client
+```
+If you are k8s user...  
+
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: remo-api-client
+  namespace: remo
+  labels:
+    app: remo-api-client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: remo-api-client
+  template:
+    metadata:
+      labels:
+        app: remo-api-client
+    spec:
+      containers:
+        - name: remo-api-client
+          image: fideltak/remo-api-client:latest
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+          env:
+            - name: REMO_TOKEN
+              value: <YOUR TOKEN>
+            - name: REMO_TARGET_DEVICE
+              value: <YOUR DEVICE NAME>
+            - name: REMO_INTERVAL
+              value: '600'
+            - name: REMO_LOG_PATH
+              value: '/tmp/sensor01.log'
+            - name: REMO_CUSTOM_NAME
+              value: 'sensor01'
+      volumes:
+        - name: tmp
+          hostPath:
+            path: /tmp
 ```
 
 ## Example  
