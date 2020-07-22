@@ -15,7 +15,8 @@ You can set prameters as envronment values.
 |REMO\_INTERVAL|10|Yes|Iteration seconds.|
 |REMO\_LOG\_PATH|/tmp/sensor.log|Option|Set log file path if you want to save sensor data.|
 |REMO\_CUSTOM\_NAME|sensor01|Option|If you want to change your device name in stdout data or log file, set this parameter.|
-
+|PROXY|yes|Option|If you want access API via this container, set value *yes*.|
+|PROXY\_PORT|8080|Option|When you set PROXY=yes you can set http port. Default *8080*|
 
 ## How to run
 If you are using docker, run like below.  
