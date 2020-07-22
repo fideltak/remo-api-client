@@ -1,5 +1,5 @@
-# Nature Remo API Client
-This is api client for Nature Remo.  
+# Nature Remo API Docker
+This is api docker client for Nature Remo.  
 You can retrieve sensor data such as Humidity, Illuminance, Motion and Temperature. And simply deploy this  client to Docker, k8s or so.
 
 ## Test Environment
